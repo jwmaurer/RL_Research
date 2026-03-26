@@ -75,18 +75,21 @@ def train(args):
             # Feed transitions into agent memory, and train the agent
             # Here, we assume that DQN always plays the first position
             # and the other players play randomly (if any)
-            for ts in trajectories[0]:
-                agent.feed(ts)
+            for index, trajs in enumerate(trajectories):
+                for ts in trajs:
+                    agents[index].feed(ts)
 
             # Evaluate the performance. Play with random agents.
             if episode % args.evaluate_every == 0:
-                logger.log_performance(
-                    episode,
-                    tournament(
-                        env,
-                        args.num_eval_games,
-                    )[0]
-                )
+                for i in range(len(agents)):
+                    logger.log_performance(
+                        episode,
+                        tournament(
+                            env,
+                            args.num_eval_games,
+                        )[i],
+                        i
+                    )
 
         # Get the paths
         csv_path, fig_path = logger.csv_path, logger.fig_path
@@ -95,9 +98,10 @@ def train(args):
     plot_curve(csv_path, fig_path, args.algorithm)
 
     # Save model
-    save_path = os.path.join(args.log_dir, 'model.pth')
-    torch.save(agent, save_path)
-    print('Model saved in', save_path)
+    for index in range(len(agents)):
+        save_path = os.path.join(args.log_dir, f'model_{index}.pth')
+        torch.save(agents[index], save_path)
+        print('Model saved in', save_path)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser("DQN/NFSP example in RLCard")
