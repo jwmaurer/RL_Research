@@ -40,6 +40,7 @@ def train(args):
     if args.algorithm == 'dqn':
         from rlcard.agents import DQNAgent
         agent = DQNAgent(
+            replay_memory_size=200000
             num_actions=env.num_actions,
             state_shape=env.state_shape[0],
             mlp_layers=[1024,512,750,500,128,64],
