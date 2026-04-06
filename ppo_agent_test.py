@@ -55,7 +55,15 @@ def train(args):
             q_mlp_layers=[256,128,256,64],
             device=device,
         )
-    agents = [agent, EuchreRuleAgent(), copy.deepcopy(agent), EuchreRuleAgent()]
+    elif args.algorithm == 'ppo':
+        from rlcard.agents import ppo_agent
+        agent = ppo_agent.PPOAgent(
+            num_actions=env.num_actions,
+            state_shape=env.state_shape[0],
+            mlp_layers=[1024,512,750,500,128,64],
+            device=device,
+        )
+    agents = [agent, EuchreRuleAgent(), EuchreRuleAgent(), EuchreRuleAgent()]
     # for _ in range(1, env.num_players):
         # agents.append(copy.deepcopy(agent))
     env.set_agents(agents)
@@ -134,6 +142,7 @@ if __name__ == '__main__':
         choices=[
             'dqn',
             'nfsp',
+            'ppo'
         ],
     )
     parser.add_argument(
