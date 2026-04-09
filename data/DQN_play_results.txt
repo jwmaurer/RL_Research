@@ -1,0 +1,24 @@
+0 D:/euchre_train_rule_agents/model_0.pth -0.0309
+1 D:/euchre_dqn_train_all/model_0.pth 0.0309
+2 D:/euchre_train_rule_agents/model_2.pth -0.0309
+3 D:/euchre_dqn_train_all/model_2.pth 0.0309
+
+0 D:/euchre_train_rule_agents/model_0.pth -0.0369
+1 D:/euchre_dqn_train_all_more_memory/model_1.pth 0.0369
+2 D:/euchre_train_rule_agents/model_2.pth -0.0369
+3 D:/euchre_dqn_train_all_more_memory/model_3.pth 0.0369
+
+0 D:/euchre_dqn_train_all/model_0.pth -0.0164
+1 D:/euchre_dqn_train_all_more_memory/model_1.pth 0.0164
+2 D:/euchre_dqn_train_all/model_2.pth -0.0164
+3 D:/euchre_dqn_train_all_more_memory/model_3.pth 0.0164
+
+0 rule_agent 0.0837
+1 D:/euchre_dqn_train_all_more_memory/model_1.pth -0.0837
+2 rule_agent 0.0837
+3 D:/euchre_dqn_train_all_more_memory/model_3.pth -0.0837
+
+0 D:/euchre_dqn_train_all/model_0.pth -0.0976
+1 rule_agent 0.0976
+2 D:/euchre_dqn_train_all/model_2.pth -0.0976
+3 rule_agent 0.0976
