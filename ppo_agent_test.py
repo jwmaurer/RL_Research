@@ -5,6 +5,7 @@
 import os
 import argparse
 
+from rlcard.agents.ppo_agent import PPOAgent
 import torch
 import copy
 
@@ -85,14 +86,14 @@ def train(args):
             # Here, we assume that DQN always plays the first position
             # and the other players play randomly (if any)
             for index, trajs in enumerate(trajectories):
-                if isinstance(agents[index], DQNAgent):
+                if isinstance(agents[index], PPOAgent):
                     for ts in trajs:
                         agents[index].feed(ts)
 
             # Evaluate the performance. Play with random agents.
             if episode % args.evaluate_every == 0:
                 for i in range(len(agents)):
-                    if isinstance(agents[index], DQNAgent):
+                    if isinstance(agents[index], PPOAgent):
                         print("Logging...")
                         logger.log_performance(
                             episode,
@@ -111,7 +112,7 @@ def train(args):
 
     # Save model
     for index in range(len(agents)):
-        if isinstance(agents[index], DQNAgent):
+        if isinstance(agents[index], PPOAgent):
             save_path = os.path.join(args.log_dir, f'model_{index}.pth')
             torch.save(agents[index], save_path)
             print('Model saved in', save_path)
