@@ -92,17 +92,14 @@ def train(args):
 
             # Evaluate the performance. Play with random agents.
             if episode % args.evaluate_every == 0:
-                for i in range(len(agents)):
-                    if isinstance(agents[index], PPOAgent):
-                        print("Logging...")
-                        logger.log_performance(
-                            episode,
-                            tournament(
-                                env,
-                                args.num_eval_games,
-                            )[i],
-                            i
-                        )
+                logger.log_performance(
+                    episode,
+                    tournament(
+                        env,
+                        args.num_eval_games,
+                    )[0],
+                    0
+                )
 
         # Get the paths
         csv_path, fig_path = logger.csv_path, logger.fig_path

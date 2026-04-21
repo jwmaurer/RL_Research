@@ -1,6 +1,6 @@
-﻿,D:/euchre_train_rule_agents/model_0.pth,D:/euchre_dqn_train_all/model_0.pth,D:/euchre_dqn_train_all_more_memory/model_1.pth,D:/euchre_dqn_train_all_more_memory/model_3.pth,D:/euchre_dqn_train_all/model_2.pth,rule_agent,D:/euchre_train_rule_agents/model_2.pth
-test 1,-0.0309,0.0309,na,na,0.0309,na,-0.0309
-test 2,-0.0369,na,0.0369,0.0369,na,na,-0.0369
-test 3,na,-0.0164,0.0164,0.0164,-0.0164,na,na
-test 4,na,na,-0.0837,-0.0837,na,0.0837,na
-test 5,na,-0.0976,na,na,-0.0976,0.0976,na
+﻿Test number,D:/euchre_train_rule_agents/model_0.pth,D:/euchre_dqn_train_all/model_0.pth,D:/euchre_dqn_train_all_more_memory/model_1.pth,D:/euchre_dqn_train_all_more_memory/model_3.pth,D:/euchre_dqn_train_all/model_2.pth,rule_agent,D:/euchre_train_rule_agents/model_2.pth
+1,-0.0309,0.0309,na,na,0.0309,na,-0.0309
+2,-0.0369,na,0.0369,0.0369,na,na,-0.0369
+3,na,-0.0164,0.0164,0.0164,-0.0164,na,na
+4,na,na,-0.0837,-0.0837,na,0.0837,na
+5,na,-0.0976,na,na,-0.0976,0.0976,na
