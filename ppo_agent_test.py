@@ -59,9 +59,10 @@ def train(args):
     elif args.algorithm == 'ppo':
         from rlcard.agents import ppo_agent
         agent = ppo_agent.PPOAgent(
+            replay_memory_size=60000,
             num_actions=env.num_actions,
             state_shape=env.state_shape[0],
-            mlp_layers=[1024,512,750,500,128,64],
+            mlp_layers=[256,128,256,64],
             device=device,
         )
     agents = [agent, EuchreRuleAgent(), EuchreRuleAgent(), EuchreRuleAgent()]
