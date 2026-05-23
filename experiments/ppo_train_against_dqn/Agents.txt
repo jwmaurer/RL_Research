@@ -1,0 +1,2 @@
+Models 0 and 2 - PPO agents
+Models 1 and 3 - DQN agents
