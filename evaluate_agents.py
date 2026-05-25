@@ -32,73 +32,52 @@ def load_model(model_path, env=None, position=None, device=None):
         agent = models.load(model_path).agents[position]
     return agent
 
-def evaluate(args):
+def evaluate(models):
 
     # Check whether gpu is available
     device = get_device()
 
     # Seed numpy, torch, random
-    set_seed(args.seed)
+    set_seed(42)
 
     # Make the environment with seed
-    env = rlcard.make(args.env, config={'seed': args.seed})
+    env = rlcard.make('euchre', config={'seed': 42})
 
     # Load models
     agents = []
-    for position, model_path in enumerate(args.models):
+    for position, model_path in enumerate(models):
         agents.append(load_model(model_path, env, position, device))
     env.set_agents(agents)
 
     # Evaluate
-    rewards = tournament(env, args.num_games)
+    rewards = tournament(env, 10000)
     for position, reward in enumerate(rewards):
-        print(position, args.models[position], reward)
+        print(position, models[position], reward)
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser("Evaluation example in RLCard")
-    parser.add_argument(
-        '--env',
-        type=str,
-        default='euchre',
-        choices=[
-            'blackjack',
-            'euchre',
-            'leduc-holdem',
-            'limit-holdem',
-            'doudizhu',
-            'mahjong',
-            'no-limit-holdem',
-            'uno',
-            'gin-rummy',
-        ],
-    )
-    parser.add_argument(
-        '--models',
-        nargs='*',
-        default=[
-            "./experiments/ppo_train_against_dqn/model_0.pth",
-            "./experiments/euchre_dqn_train_all_more_memory/model_1.pth",
-            "./experiments/ppo_train_against_dqn/model_2.pth",
-            "./experiments/euchre_dqn_train_all_more_memory/model_3.pth"
-        ],
-    )
-    parser.add_argument(
-        '--cuda',
-        type=str,
-        default='',
-    )
-    parser.add_argument(
-        '--seed',
-        type=int,
-        default=42,
-    )
-    parser.add_argument(
-        '--num_games',
-        type=int,
-        default=10000,
-    )
-
-    args = parser.parse_args()
-
-    # os.environ["CUDA_VISIBLE_DEVICES"] = args.cuda
-    evaluate(args)
+    evals = [
+        #Test against random agents to ensure they are playing correctly
+        ['./experiments/euchre_dqn_train_all_more_memory/model_0.pth', 'random', './experiments/euchre_dqn_train_all_more_memory/model_2.pth', 'random'],
+        ['random', './experiments/euchre_dqn_train_all_more_memory/model_1.pth', 'random', './experiments/euchre_dqn_train_all_more_memory/model_3.pth'],
+        ['./experiments/ppo_train_all/model_0.pth', 'random', './experiments/ppo_train_all/model_2.pth', 'random'],
+        ['random', './experiments/ppo_train_all/model_1.pth', 'random', './experiments/ppo_train_all/model_3.pth'],
+        ['./experiments/ppo_train_against_dqn/model_0.pth', 'random', './experiments/ppo_train_against_dqn/model_2.pth', 'random'],
+        ['random', './experiments/ppo_train_against_dqn/model_1.pth', 'random', './experiments/ppo_train_against_dqn/model_3.pth'],
+        
+        #Test against the rule based agent
+        ['./experiments/euchre_dqn_train_all_more_memory/model_0.pth', 'rule_agent', './experiments/euchre_dqn_train_all_more_memory/model_2.pth', 'rule_agent'],
+        ['rule_agent', './experiments/euchre_dqn_train_all_more_memory/model_1.pth', 'rule_agent', './experiments/euchre_dqn_train_all_more_memory/model_3.pth'],
+        ['./experiments/ppo_train_all/model_0.pth', 'rule_agent', './experiments/ppo_train_all/model_2.pth', 'rule_agent'],
+        ['rule_agent', './experiments/ppo_train_all/model_1.pth', 'rule_agent', './experiments/ppo_train_all/model_3.pth'],
+        ['./experiments/ppo_train_against_dqn/model_0.pth', 'rule_agent', './experiments/ppo_train_against_dqn/model_2.pth', 'rule_agent'],
+        ['rule_agent', './experiments/ppo_train_against_dqn/model_1.pth', 'rule_agent', './experiments/ppo_train_against_dqn/model_3.pth'],
+        
+        #Test the ppo-dqn trained agents versus the homogenous trained agents
+        ['./experiments/euchre_dqn_train_all_more_memory/model_0.pth', './experiments/ppo_train_against_dqn/model_1.pth', './experiments/euchre_dqn_train_all_more_memory/model_2.pth', './experiments/ppo_train_against_dqn/model_3.pth'],
+        ['./experiments/euchre_dqn_train_all_more_memory/model_1.pth', './experiments/ppo_train_against_dqn/model_1.pth', './experiments/euchre_dqn_train_all_more_memory/model_3.pth', './experiments/ppo_train_against_dqn/model_3.pth'],
+        ['./experiments/ppo_train_against_dqn/model_0.pth', './experiments/ppo_train_all/model_1.pth', './experiments/ppo_train_against_dqn/model_2.pth', './experiments/ppo_train_all/model_3.pth'],
+        ['./experiments/ppo_train_against_dqn/model_0.pth', './experiments/ppo_train_all/model_0.pth', './experiments/ppo_train_against_dqn/model_2.pth', './experiments/ppo_train_all/model_2.pth'],
+    ]
+    for eval in evals:
+        evaluate(eval)
+        print()
