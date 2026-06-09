@@ -24,7 +24,7 @@ from rlcard.utils import (
 def train(args):
 
     # Check whether gpu is available
-    device = get_device()
+    device = 'cpu'
         
     # Seed numpy, torch, random
     set_seed(args.seed)
@@ -120,7 +120,7 @@ if __name__ == '__main__':
     parser.add_argument(
         '--env',
         type=str,
-        default='leduc-holdem',
+        default='euchre',
         choices=[
             'blackjack',
             'leduc-holdem',
@@ -137,7 +137,7 @@ if __name__ == '__main__':
     parser.add_argument(
         '--algorithm',
         type=str,
-        default='dqn',
+        default='ppo',
         choices=[
             'dqn',
             'nfsp',
@@ -172,10 +172,10 @@ if __name__ == '__main__':
     parser.add_argument(
         '--log_dir',
         type=str,
-        default='experiments/leduc_holdem_dqn_result/',
+        default='experiments/euchre_ppo_test_result/',
     )
 
     args = parser.parse_args()
 
-    os.environ["CUDA_VISIBLE_DEVICES"] = args.cuda
+    # os.environ["CUDA_VISIBLE_DEVICES"] = args.cuda
     train(args)
