@@ -55,29 +55,23 @@ def evaluate(models):
         print(position, models[position], reward)
 
 if __name__ == '__main__':
-    evals = [
-        #Test against random agents to ensure they are playing correctly
-        ['./experiments/euchre_dqn_train_all_more_memory/model_0.pth', 'random', './experiments/euchre_dqn_train_all_more_memory/model_2.pth', 'random'],
-        ['random', './experiments/euchre_dqn_train_all_more_memory/model_1.pth', 'random', './experiments/euchre_dqn_train_all_more_memory/model_3.pth'],
-        ['./experiments/ppo_train_all/model_0.pth', 'random', './experiments/ppo_train_all/model_2.pth', 'random'],
-        ['random', './experiments/ppo_train_all/model_1.pth', 'random', './experiments/ppo_train_all/model_3.pth'],
-        ['./experiments/ppo_train_against_dqn/model_0.pth', 'random', './experiments/ppo_train_against_dqn/model_2.pth', 'random'],
-        ['random', './experiments/ppo_train_against_dqn/model_1.pth', 'random', './experiments/ppo_train_against_dqn/model_3.pth'],
-        
-        #Test against the rule based agent
-        ['./experiments/euchre_dqn_train_all_more_memory/model_0.pth', 'rule_agent', './experiments/euchre_dqn_train_all_more_memory/model_2.pth', 'rule_agent'],
-        ['rule_agent', './experiments/euchre_dqn_train_all_more_memory/model_1.pth', 'rule_agent', './experiments/euchre_dqn_train_all_more_memory/model_3.pth'],
-        ['./experiments/ppo_train_all/model_0.pth', 'rule_agent', './experiments/ppo_train_all/model_2.pth', 'rule_agent'],
-        ['rule_agent', './experiments/ppo_train_all/model_1.pth', 'rule_agent', './experiments/ppo_train_all/model_3.pth'],
-        ['./experiments/ppo_train_against_dqn/model_0.pth', 'rule_agent', './experiments/ppo_train_against_dqn/model_2.pth', 'rule_agent'],
-        ['rule_agent', './experiments/ppo_train_against_dqn/model_1.pth', 'rule_agent', './experiments/ppo_train_against_dqn/model_3.pth'],
-        
-        #Test the ppo-dqn trained agents versus the homogenous trained agents
-        ['./experiments/euchre_dqn_train_all_more_memory/model_0.pth', './experiments/ppo_train_against_dqn/model_1.pth', './experiments/euchre_dqn_train_all_more_memory/model_2.pth', './experiments/ppo_train_against_dqn/model_3.pth'],
-        ['./experiments/euchre_dqn_train_all_more_memory/model_1.pth', './experiments/ppo_train_against_dqn/model_1.pth', './experiments/euchre_dqn_train_all_more_memory/model_3.pth', './experiments/ppo_train_against_dqn/model_3.pth'],
-        ['./experiments/ppo_train_against_dqn/model_0.pth', './experiments/ppo_train_all/model_1.pth', './experiments/ppo_train_against_dqn/model_2.pth', './experiments/ppo_train_all/model_3.pth'],
-        ['./experiments/ppo_train_against_dqn/model_0.pth', './experiments/ppo_train_all/model_0.pth', './experiments/ppo_train_against_dqn/model_2.pth', './experiments/ppo_train_all/model_2.pth'],
+    model_teams = [
+        ('random', 'random'),
+        ('rule_agent', 'rule_agent'),
+        ('./experiments/dqn_more_mem_random_agent/model_0.pth', './experiments/dqn_more_mem_random_agent/model_2.pth'),
+        ('./experiments/dqn_more_mem_rules_agent/model_0.pth', './experiments/dqn_more_mem_rules_agent/model_2.pth'),
+        ('./experiments/euchre_dqn_train_all_more_memory/model_0.pth', './experiments/euchre_dqn_train_all_more_memory/model_2.pth'),
+        ('./experiments/euchre_dqn_train_all_more_memory/model_1.pth', './experiments/euchre_dqn_train_all_more_memory/model_3.pth'),
+        ('./experiments/ppo_new_dqn_agents/model_1.pth', './experiments/ppo_new_dqn_agents/model_3.pth'),
+        ('./experiments/ppo_new_random_agent/model_0.pth', './experiments/ppo_new_random_agent/model_2.pth'),
+        ('./experiments/ppo_new_rules_agent/model_0.pth', './experiments/ppo_new_rules_agent/model_2.pth'),
+        ('./experiments/ppo_new_ppo_new/model_0.pth', './experiments/ppo_new_ppo_new/model_2.pth'),
+        ('./experiments/ppo_new_ppo_new/model_1.pth', './experiments/ppo_new_ppo_new/model_3.pth'),
+        ('./experiments/ppo_new_dqn_agents/model_0.pth', './experiments/ppo_new_dqn_agents/model_2.pth')
     ]
-    for eval in evals:
-        evaluate(eval)
-        print()
+    
+    for team1 in model_teams:
+        for team2 in model_teams:
+            test_eval = [team1[0], team2[0], team1[1], team2[1]]
+            evaluate(test_eval)
+            print()

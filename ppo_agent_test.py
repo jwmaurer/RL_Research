@@ -24,7 +24,7 @@ from rlcard.utils import (
 def train(args):
 
     # Check whether gpu is available
-    device = 'cpu'
+    device = get_device()
         
     # Seed numpy, torch, random
     set_seed(args.seed)
@@ -36,7 +36,6 @@ def train(args):
             'seed': args.seed,
         }
     )
-
     # Initialize the agent and use random agents as opponents
     if args.algorithm == 'dqn':
         from rlcard.agents import DQNAgent
@@ -177,5 +176,5 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
 
-    # os.environ["CUDA_VISIBLE_DEVICES"] = args.cuda
+    os.environ["CUDA_VISIBLE_DEVICES"] = args.cuda
     train(args)
